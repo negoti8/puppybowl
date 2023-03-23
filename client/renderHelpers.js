@@ -65,6 +65,11 @@ export const renderSinglePlayer = (playerObj) => {
   `;
 
   playerContainer.innerHTML = pupHTML;
+  const seeAll = document.querySelector("#see-all");
+  seeAll.addEventListener("click", async () => {
+    const fetchPlayers = await fetchAllPlayers();
+    renderAllPlayers(fetchPlayers);
+  });
 };
 
 export const renderNewPlayerForm = () => {
