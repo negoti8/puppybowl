@@ -16,7 +16,16 @@ export const fetchAllPlayers = async () => {
   }
 };
 
-export const fetchSinglePlayer = async (playerId) => {};
+export const fetchSinglePlayer = async (id) => {
+  try {
+    const response = await fetch(`${APIURL}/players/${id}`);
+    const singlePuppy = await response.json();
+    console.log(singlePuppy);
+    return singlePuppy.data.player;
+  } catch (error) {
+    console.error("Oops there was error fetching the single puppy", error);
+  }
+};
 
 export const addNewPlayer = async (playerObj) => {};
 
