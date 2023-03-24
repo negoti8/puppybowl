@@ -1,5 +1,5 @@
 // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
-const cohortName = "2207-FTB-ET-WEB-PT";
+const cohortName = "2301-FTB-ET-WEB-AM";
 // Use the APIURL variable for fetch requests
 const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}`;
 
