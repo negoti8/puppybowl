@@ -101,7 +101,7 @@ export const renderNewPlayerForm = () => {
   });
 };
 export const deletePlayer = () => {
-  let deleteButtons = [...document.getElementsByClassName("delete-button")];
+  let deleteButtons = document.querySelector(".delete-button");
   for (let i = 0; i < deleteButtons.length; i++) {
     const button = deleteButtons[i];
     button.addEventListener("click", async () => {

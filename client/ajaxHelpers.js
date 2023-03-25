@@ -2,6 +2,7 @@ import {
   renderNewPlayerForm,
   renderSinglePlayer,
   renderAllPlayers,
+  deletePlayer,
 } from "./renderHelpers";
 
 // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
@@ -60,6 +61,7 @@ export const removePlayer = async (playerId) => {
     });
     const deletedPuppy = await response.json();
     if (deletedPuppy.error) throw deletedPuppy.error;
+    deletePlayer();
     return;
   } catch (error) {
     console.error(
