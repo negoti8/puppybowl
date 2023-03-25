@@ -27,7 +27,7 @@ export const renderAllPlayers = (playerList) => {
         </div>
         <img src="${pup.imageUrl}" alt="photo of ${pup.name} the puppy">
         <button class="detail-button" data-id=${pup.id}>See details</button>
-        <button class="delete-button"> Remove Player</button>
+        <button class="delete-button" data-id=${pup.id}> Remove Player</button>
       </div>
     `;
     playerContainerHTML += pupHTML;
@@ -108,6 +108,11 @@ export const deletePlayer = () => {
       await removePlayer(button.dataset.id);
       const players = await fetchAllPlayers();
       renderAllPlayers(players);
+      if (players === null) {
+        playerContainer.innerHTML =
+          "<h3>Couldn't find data for this player!</h3>";
+      }
+      return;
     });
   }
 };
