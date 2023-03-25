@@ -120,24 +120,8 @@ export const deletePlayer = () => {
       if (players === null) {
         playerContainer.innerHTML =
           "<h3>Couldn't find data for this player!</h3>";
-      return;
-    };
-  })
-}
-;
-
-// let removeButtons = document.querySelector("#remove-player");
-// for (let i = 0; i < removeButtons.length; i++) {
-//   const button = removeButtons[i];
-//   button.addEventListener("click", async () => {
-//     await removePlayer(button.dataset.id);
-//     const players = await fetchAllPlayers();
-//     renderAllPlayers(players);
-//     if (players === null) {
-//       playerContainer.innerHTML =
-//         "<h3>Couldn't find data for this player!</h3>";
-//       }
-//       return;
-//     });
-//   }
-// };
+        return;
+      }
+    });
+  }
+};
