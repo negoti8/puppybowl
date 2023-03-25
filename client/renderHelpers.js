@@ -39,20 +39,15 @@ export const renderAllPlayers = (playerList) => {
   // Now that the HTML for all players has been added to the DOM,
   // we want to grab those "See details" buttons on each player
   // and attach a click handler to each one
-  let detailButtons = [...document.getElementsByClassName("detail-button")];
+  let detailButtons = document.querySelector(".detail-button");
   for (let i = 0; i < detailButtons.length; i++) {
     const button = detailButtons[i];
-    button.addEventListener("click", async () => {
+    detailButtons.addEventListener("click", async () => {
       const singlePlayerData = await fetchSinglePlayer(button.dataset.id);
       renderSinglePlayer(singlePlayerData);
     });
   }
 };
-let removeButtons = document.querySelector("#remove-player");
-
-removeButtons.addEventListener("click", async () => {
-  removePlayer();
-});
 
 export const renderSinglePlayer = (playerObj) => {
   if (!playerObj || !playerObj.id) {
@@ -107,4 +102,19 @@ export const renderNewPlayerForm = () => {
     };
     addNewPlayer(playerData);
   });
+};
+export const deletePlayer = () => {
+  let removeButtons = document.querySelector("#remove-player");
+  for (let i = 0; i < removeButtons.length; i++) {
+    const button = removeButtons[i];
+    button.addEventListener("click", async () => {
+      await removePlayer(button.dataset.id);
+      const players = await fetchAllPlayers();
+      renderAllPlayers(players);
+
+      playerContainer.innerHTML =
+        "<h3>Couldn't find data for this player!</h3>";
+      return;
+    });
+  }
 };
