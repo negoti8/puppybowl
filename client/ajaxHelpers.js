@@ -2,7 +2,6 @@ import {
   renderNewPlayerForm,
   renderSinglePlayer,
   renderAllPlayers,
-  deletePlayer,
 } from "./renderHelpers";
 
 // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
@@ -38,7 +37,7 @@ export const fetchSinglePlayer = async (id) => {
 
 export const addNewPlayer = async (playerObj) => {
   try {
-    const response = await fetch(`${APIURL}`, {
+    const response = await fetch(`${APIURL}/players`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,10 +45,9 @@ export const addNewPlayer = async (playerObj) => {
       body: JSON.stringify(playerObj),
     });
     const NewPlayer = response.json();
-    console.log("New Player= ", NewPlayer);
-    renderAllPlayers();
+    if (NewPlayer.error) throw NewPlayer.error;
     renderNewPlayerForm();
-    return NewPlayer;
+    return NewPlayer.data.player;
   } catch (error) {
     console.error("Oops there was error creating new player", error);
   }
@@ -59,15 +57,14 @@ export const removePlayer = async (playerId) => {
   try {
     const response = await fetch(`${APIURL}/players/${playerId}`, {
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
     });
     const deletedPuppy = await response.json();
-    console.log(deletedPuppy);
-    deletePlayer();
-    return deletedPuppy;
+    if (deletedPuppy.error) throw deletedPuppy.error;
+    return;
   } catch (error) {
-    console.error("Oops, an error deleting a pupper! ", error);
+    console.error(
+      `Oops, an error deleting a player #${playerId} from the roster! `,
+      error
+    );
   }
 };

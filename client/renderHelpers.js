@@ -27,7 +27,7 @@ export const renderAllPlayers = (playerList) => {
         </div>
         <img src="${pup.imageUrl}" alt="photo of ${pup.name} the puppy">
         <button class="detail-button" data-id=${pup.id}>See details</button>
-        <button id="remove-player"> Remove Player</button>
+        <button class="delete-button"> Remove Player</button>
       </div>
     `;
     playerContainerHTML += pupHTML;
@@ -39,10 +39,10 @@ export const renderAllPlayers = (playerList) => {
   // Now that the HTML for all players has been added to the DOM,
   // we want to grab those "See details" buttons on each player
   // and attach a click handler to each one
-  let detailButtons = document.querySelector(".detail-button");
+  let detailButtons = [...document.getElementsByClassName("detail-button")];
   for (let i = 0; i < detailButtons.length; i++) {
     const button = detailButtons[i];
-    detailButtons.addEventListener("click", async () => {
+    button.addEventListener("click", async () => {
       const singlePlayerData = await fetchSinglePlayer(button.dataset.id);
       renderSinglePlayer(singlePlayerData);
     });
@@ -77,7 +77,6 @@ export const renderSinglePlayer = (playerObj) => {
     renderAllPlayers(fetchPlayers);
   });
 };
-
 export const renderNewPlayerForm = () => {
   let formHTML = `
     <form>
@@ -92,29 +91,38 @@ export const renderNewPlayerForm = () => {
 
   let form = document.querySelector("#new-player-form > form");
   form.addEventListener("submit", async (event) => {
-    /*
-      YOUR CODE HERE
-    */
     event.preventDefault();
-    let playerData = {
+    let playerObj = {
       name: form.elements.name.value,
       breed: form.elements.breed.value,
     };
-    addNewPlayer(playerData);
+    const addPlayer = await addNewPlayer(playerObj);
+    renderSinglePlayer(addPlayer);
   });
 };
 export const deletePlayer = () => {
-  let removeButtons = document.querySelector("#remove-player");
-  for (let i = 0; i < removeButtons.length; i++) {
-    const button = removeButtons[i];
+  let deleteButtons = [...document.getElementsByClassName("delete-button")];
+  for (let i = 0; i < deleteButtons.length; i++) {
+    const button = deleteButtons[i];
     button.addEventListener("click", async () => {
       await removePlayer(button.dataset.id);
       const players = await fetchAllPlayers();
       renderAllPlayers(players);
-
-      playerContainer.innerHTML =
-        "<h3>Couldn't find data for this player!</h3>";
-      return;
     });
   }
 };
+// let removeButtons = document.querySelector("#remove-player");
+// for (let i = 0; i < removeButtons.length; i++) {
+//   const button = removeButtons[i];
+//   button.addEventListener("click", async () => {
+//     await removePlayer(button.dataset.id);
+//     const players = await fetchAllPlayers();
+//     renderAllPlayers(players);
+//     if (players === null) {
+//       playerContainer.innerHTML =
+//         "<h3>Couldn't find data for this player!</h3>";
+//       }
+//       return;
+//     });
+//   }
+// };
