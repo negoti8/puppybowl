@@ -121,10 +121,11 @@ export const deletePlayer = () => {
         playerContainer.innerHTML =
           "<h3>Couldn't find data for this player!</h3>";
       return;
-    });
-    }
-  }
-};
+    };
+  })
+}
+;
+
 // let removeButtons = document.querySelector("#remove-player");
 // for (let i = 0; i < removeButtons.length; i++) {
 //   const button = removeButtons[i];
