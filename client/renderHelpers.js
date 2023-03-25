@@ -1,4 +1,9 @@
-import { fetchAllPlayers, fetchSinglePlayer } from "./ajaxHelpers";
+import {
+  fetchAllPlayers,
+  fetchSinglePlayer,
+  addNewPlayer,
+  removePlayer,
+} from "./ajaxHelpers";
 
 const playerContainer = document.getElementById("all-players-container");
 const newPlayerFormContainer = document.getElementById("new-player-form");
@@ -22,6 +27,7 @@ export const renderAllPlayers = (playerList) => {
         </div>
         <img src="${pup.imageUrl}" alt="photo of ${pup.name} the puppy">
         <button class="detail-button" data-id=${pup.id}>See details</button>
+        <button id="remove-player"> Remove Player</button>
       </div>
     `;
     playerContainerHTML += pupHTML;
@@ -42,6 +48,11 @@ export const renderAllPlayers = (playerList) => {
     });
   }
 };
+let removeButtons = document.querySelector("#remove-player");
+
+removeButtons.addEventListener("click", async () => {
+  removePlayer();
+});
 
 export const renderSinglePlayer = (playerObj) => {
   if (!playerObj || !playerObj.id) {
@@ -89,5 +100,11 @@ export const renderNewPlayerForm = () => {
     /*
       YOUR CODE HERE
     */
+    event.preventDefault();
+    let playerData = {
+      name: form.elements.name.value,
+      breed: form.elements.breed.value,
+    };
+    addNewPlayer(playerData);
   });
 };
