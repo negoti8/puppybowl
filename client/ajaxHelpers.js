@@ -2,7 +2,6 @@ import {
   renderNewPlayerForm,
   renderSinglePlayer,
   renderAllPlayers,
-  deletePlayer,
 } from "./renderHelpers";
 
 // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
@@ -18,6 +17,7 @@ export const fetchAllPlayers = async () => {
       throw result.error;
     }
     renderAllPlayers();
+    console.log(1);
     return result.data.players;
   } catch (error) {
     console.error("Uh oh, trouble fetching players!", error);
@@ -30,6 +30,7 @@ export const fetchSinglePlayer = async (id) => {
     const singlePuppy = await response.json();
     console.log(singlePuppy);
     renderSinglePlayer();
+    console.log(2);
     return singlePuppy.data.player;
   } catch (error) {
     console.error("Oops there was error fetching the single puppy", error);
@@ -45,6 +46,7 @@ export const addNewPlayer = async (playerObj) => {
       },
       body: JSON.stringify(playerObj),
     });
+    console.log(3);
     const NewPlayer = response.json();
     if (NewPlayer.error) throw NewPlayer.error;
     renderNewPlayerForm();
@@ -61,7 +63,7 @@ export const removePlayer = async (playerId) => {
     });
     const deletedPuppy = await response.json();
     if (deletedPuppy.error) throw deletedPuppy.error;
-    deletePlayer();
+    console.log(4);
     return;
   } catch (error) {
     console.error(

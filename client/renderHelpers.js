@@ -14,6 +14,7 @@ export const renderAllPlayers = (playerList) => {
     playerContainer.innerHTML = "<h3>No players to display!</h3>";
     return;
   }
+  console.log(1);
 
   // Loop through the list of players, and construct some HTML to display each one
   let playerContainerHTML = "";
@@ -46,6 +47,7 @@ export const renderAllPlayers = (playerList) => {
       const singlePlayerData = await fetchSinglePlayer(button.dataset.id);
       renderSinglePlayer(singlePlayerData);
     });
+    deletePlayer();
   }
 };
 
@@ -54,6 +56,7 @@ export const renderSinglePlayer = (playerObj) => {
     playerContainer.innerHTML = "<h3>Couldn't find data for this player!</h3>";
     return;
   }
+  console.log(2);
 
   let pupHTML = `
     <div class="single-player-view">
@@ -96,24 +99,30 @@ export const renderNewPlayerForm = () => {
       name: form.elements.name.value,
       breed: form.elements.breed.value,
     };
+    console.log(3);
     const addPlayer = await addNewPlayer(playerObj);
     renderSinglePlayer(addPlayer);
   });
 };
+console.log(4);
 export const deletePlayer = () => {
-  let deleteButtons = document.querySelector(".delete-button");
+  console.log(4);
+  let deleteButtons = [...document.querySelectorAll(".delete-button")];
+  console.log(deleteButtons);
+
   for (let i = 0; i < deleteButtons.length; i++) {
     const button = deleteButtons[i];
     button.addEventListener("click", async () => {
+      console.log(4);
       await removePlayer(button.dataset.id);
       const players = await fetchAllPlayers();
       renderAllPlayers(players);
       if (players === null) {
         playerContainer.innerHTML =
           "<h3>Couldn't find data for this player!</h3>";
-      }
       return;
     });
+    }
   }
 };
 // let removeButtons = document.querySelector("#remove-player");
